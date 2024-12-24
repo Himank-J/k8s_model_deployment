@@ -5,7 +5,7 @@ metadata:
   name: dog-classifier-ingress
 spec:
   rules:
-  - host: dog-classifier.local
+  - host: app.15.207.114.22.nip.io
     http:
       paths:
       - path: /api

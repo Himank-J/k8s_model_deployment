@@ -27,17 +27,6 @@ print(f'Backend URL set to: {BACKEND_URL}')
 
 @app.get("/", response_class=HTMLResponse)
 async def ui_home():
-    header = CardHeader(
-        Div(
-            CardTitle("Dog Breed Classifier 🐶"),
-            Badge("AI Powered", variant="secondary", 
-                  cls="w-fit bg-gradient-to-r from-blue-500 to-green-500 text-white font-bold hover:from-blue-600 hover:to-green-600 transition duration-300"),
-            cls="flex items-center justify-between",
-        ),
-        CardDescription(
-            "Upload an image to classify the breed of the dog. Our AI model will analyze it instantly!"
-        ),
-    )
     content = Html(
         Head(
             Title("Dog Breed Classifier"),
@@ -50,10 +39,10 @@ async def ui_home():
             Style(
                 """
                 body {
-                    background: url('https://media.giphy.com/media/3o7aD0QrhhK5TYwpuU/giphy.gif');
-                    background-size: cover;
-                    background-repeat: no-repeat;
-                    background-attachment: fixed;
+                    background: url('https://media.giphy.com/media/3o7aD0QrhhK5TYwpuU/giphy.gif'); /* Giphy GIF as background */
+                    background-size: cover; /* Cover the entire background */
+                    background-repeat: no-repeat; /* Do not repeat the image */
+                    background-attachment: fixed; /* Keep the background fixed during scrolling */
                 }
                 """
             ),
@@ -61,18 +50,41 @@ async def ui_home():
         Body(
             Div(
                 Card(
-                    header,
+                    CardHeader(
+                        Div(
+                            CardTitle("Dog Breed Classifier 🐶"),
+                            Badge("AI Powered", variant="secondary", cls="w-fit bg-gradient-to-r from-blue-500 to-green-500 text-white font-bold hover:from-blue-600 hover:to-green-600 transition duration-300"),
+                            cls="flex items-center justify-between",
+                        ),
+                        CardDescription(
+                            "Upload an image to classify the breed of the dog. Our AI model will analyze it instantly!"
+                        ),
+                    ),
                     CardContent(
                         Form(
                             Div(
-                                Input(
-                                    type="file",
-                                    name="file",
-                                    accept="image/*",
-                                    required=True,
-                                    cls="mb-4 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90 file:cursor-pointer",
+                                Div(
+                                    Input(
+                                        type="file",
+                                        name="file",
+                                        accept="image/*",
+                                        required=True,
+                                        cls="mb-4 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90 file:cursor-pointer",
+                                    ),
+                                    P(
+                                        "Drag and drop an image or click to browse",
+                                        cls="text-sm text-muted-foreground text-center mt-2",
+                                    ),
+                                    cls="border-2 border-dashed rounded-lg p-4 hover:border-primary/50 transition-colors",
+                                ),
+                                Img(
+                                    src="",
+                                    id="file-preview",
+                                    alt="File Preview",
+                                    cls="mt-4 w-full h-auto rounded-lg shadow-lg hidden",
                                 ),
                                 Button(
+                                    Lucide("sparkles", cls="mr-2 h-4 w-4"),
                                     "Classify Image",
                                     type="submit",
                                     cls="w-full bg-gradient-to-r from-blue-500 to-green-500 text-white hover:from-blue-600 hover:to-green-600 transition duration-300",
@@ -86,6 +98,7 @@ async def ui_home():
                         Div(id="result", cls="mt-6"),
                     ),
                     cls="w-full max-w-3xl shadow-lg transition-transform transform hover:scale-105",
+                    standard=True,
                 ),
                 cls="container flex items-center justify-center min-h-screen p-4",
             ),
